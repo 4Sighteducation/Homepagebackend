@@ -225,8 +225,13 @@ async function fetchAllStudents(schoolId, appId, apiKey) {
     ]
   };
   
+  console.log(`[Bulk Update] Fetching students with filter:`, JSON.stringify(filters));
+  console.log(`[Bulk Update] School ID: ${schoolId}`);
+  
   while (hasMore) {
     const url = `${KNACK_API_URL}/objects/object_3/records?filters=${encodeURIComponent(JSON.stringify(filters))}&page=${page}&rows_per_page=${rowsPerPage}`;
+    
+    console.log(`[Bulk Update] Fetching page ${page} from URL: ${url}`);
     
     const response = await fetch(url, {
       method: 'GET',
@@ -238,10 +243,13 @@ async function fetchAllStudents(schoolId, appId, apiKey) {
     });
     
     if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`[Bulk Update] Failed to fetch students: ${response.status} - ${errorText}`);
       throw new Error(`Failed to fetch students: ${response.statusText}`);
     }
     
     const data = await response.json();
+    console.log(`[Bulk Update] Page ${page} returned ${data.records ? data.records.length : 0} records`);
     
     if (data.records && data.records.length > 0) {
       allStudents.push(...data.records);
@@ -252,6 +260,7 @@ async function fetchAllStudents(schoolId, appId, apiKey) {
     }
   }
   
+  console.log(`[Bulk Update] Total students found: ${allStudents.length}`);
   return allStudents;
 }
 
@@ -264,6 +273,11 @@ async function updateStudentRecord(recordId, fieldName, value, appId, apiKey) {
   const updateData = {};
   updateData[fieldName] = value;
   
+  console.log(`[Bulk Update] Updating record ${recordId} - Setting ${fieldName} to ${value}`);
+  console.log(`[Bulk Update] Request URL: ${url}`);
+  console.log(`[Bulk Update] Request data:`, JSON.stringify(updateData));
+  console.log(`[Bulk Update] Using App ID: ${appId ? 'Present' : 'Missing'}, API Key: ${apiKey ? 'Present' : 'Missing'}`);
+  
   const response = await fetch(url, {
     method: 'PUT',
     headers: {
@@ -275,10 +289,14 @@ async function updateStudentRecord(recordId, fieldName, value, appId, apiKey) {
   });
   
   if (!response.ok) {
+    const errorText = await response.text();
+    console.error(`[Bulk Update] Failed to update record ${recordId}: Status ${response.status} - ${errorText}`);
     throw new Error(`Failed to update record ${recordId}: ${response.statusText}`);
   }
   
-  return response.json();
+  const result = await response.json();
+  console.log(`[Bulk Update] Successfully updated record ${recordId}`);
+  return result;
 }
 
 /**
