@@ -8,3 +8,4 @@ env.example
 frontend-integration.js
 *.log
 .DS_Store
+

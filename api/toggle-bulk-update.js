@@ -301,3 +301,4 @@ async function updateJobStatus(jobId, updates) {
     jobs.set(jobId, { ...currentData, ...updates });
   }
 }
+

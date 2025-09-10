@@ -99,3 +99,4 @@ function formatTime(seconds) {
     return `${hours}h ${minutes}m`;
   }
 }
+
