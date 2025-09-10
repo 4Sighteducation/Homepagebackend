@@ -1,0 +1,20 @@
+{
+  "functions": {
+    "api/toggle-bulk-update.js": {
+      "maxDuration": 300
+    },
+    "api/toggle-status/[jobId].js": {
+      "maxDuration": 10
+    }
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET,POST,OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, X-Knack-Application-Id, X-Knack-REST-API-Key" }
+      ]
+    }
+  ]
+}
