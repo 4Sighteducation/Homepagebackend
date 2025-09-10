@@ -50,14 +50,34 @@ module.exports = async (req, res) => {
   try {
     const { schoolId, fieldName, value, toggleType } = req.body;
     
+    // Debug log headers
+    console.log('[Bulk Update] Headers received:', {
+      'x-knack-application-id': req.headers['x-knack-application-id'] ? 'Present' : 'Missing',
+      'x-knack-rest-api-key': req.headers['x-knack-rest-api-key'] ? 'Present' : 'Missing'
+    });
+    console.log('[Bulk Update] Environment variables:', {
+      'KNACK_APPLICATION_ID': process.env.KNACK_APPLICATION_ID ? 'Present' : 'Missing',
+      'KNACK_API_KEY': process.env.KNACK_API_KEY ? 'Present' : 'Missing'
+    });
+    
     // Get Knack credentials from headers or environment
     const appId = req.headers['x-knack-application-id'] || process.env.KNACK_APPLICATION_ID;
     const apiKey = req.headers['x-knack-rest-api-key'] || process.env.KNACK_API_KEY;
     
+    console.log('[Bulk Update] Using credentials:', {
+      appId: appId ? 'Found' : 'Missing',
+      apiKey: apiKey ? 'Found' : 'Missing'
+    });
+    
     if (!appId || !apiKey) {
+      console.error('[Bulk Update] Missing credentials - returning error');
       return res.status(400).json({ 
         error: 'Missing Knack credentials',
-        details: 'Please provide X-Knack-Application-Id and X-Knack-REST-API-Key headers' 
+        details: 'Please provide X-Knack-Application-Id and X-Knack-REST-API-Key headers',
+        hasHeaderAppId: !!req.headers['x-knack-application-id'],
+        hasHeaderApiKey: !!req.headers['x-knack-rest-api-key'],
+        hasEnvAppId: !!process.env.KNACK_APPLICATION_ID,
+        hasEnvApiKey: !!process.env.KNACK_API_KEY
       });
     }
     
