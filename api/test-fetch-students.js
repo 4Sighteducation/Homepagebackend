@@ -16,9 +16,9 @@ module.exports = async (req, res) => {
   try {
     const { schoolId } = req.body || req.query;
     
-    // Get Knack credentials from headers or environment
-    const appId = req.headers['x-knack-application-id'] || process.env.KNACK_APPLICATION_ID;
-    const apiKey = req.headers['x-knack-rest-api-key'] || process.env.KNACK_API_KEY;
+    // Get Knack credentials - prefer environment over headers for security
+    const appId = process.env.KNACK_APPLICATION_ID || req.headers['x-knack-application-id'];
+    const apiKey = process.env.KNACK_API_KEY || req.headers['x-knack-rest-api-key'];
     
     if (!appId || !apiKey) {
       return res.status(400).json({ 

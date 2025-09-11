@@ -60,9 +60,9 @@ module.exports = async (req, res) => {
       'KNACK_API_KEY': process.env.KNACK_API_KEY ? 'Present' : 'Missing'
     });
     
-    // Get Knack credentials from headers or environment
-    const appId = req.headers['x-knack-application-id'] || process.env.KNACK_APPLICATION_ID;
-    const apiKey = req.headers['x-knack-rest-api-key'] || process.env.KNACK_API_KEY;
+    // Get Knack credentials - prefer environment over headers for security
+    const appId = process.env.KNACK_APPLICATION_ID || req.headers['x-knack-application-id'];
+    const apiKey = process.env.KNACK_API_KEY || req.headers['x-knack-rest-api-key'];
     
     console.log('[Bulk Update] Using credentials:', {
       appId: appId ? 'Found' : 'Missing',
