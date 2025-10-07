@@ -5,6 +5,9 @@
     },
     "api/toggle-status/[jobId].js": {
       "maxDuration": 10
+    },
+    "api/mmu-consent-submit.js": {
+      "maxDuration": 30
     }
   },
   "headers": [
