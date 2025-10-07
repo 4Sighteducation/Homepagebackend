@@ -65,3 +65,4 @@ geckodriver*
 
 # Specific files to ignore
 .env copy
+.vercel

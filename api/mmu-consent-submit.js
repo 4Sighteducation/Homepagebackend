@@ -101,12 +101,12 @@ module.exports = async (req, res) => {
     
     // Step 3: Prepare consent data for Knack (object_10)
     const consentData = {
-      field_3743: responses.confirm_read, // mmu_confirm_read
-      field_3744: responses.time_to_consider, // mmu_time_to_consider
-      field_3745: responses.free_to_withdraw, // mmu_free_to_withdraw
-      field_3746: responses.agree_participate, // mmu_agree_participate
-      field_3747: responses.permission_research, // mmu_permission_research
-      field_3748: signatureHTML // mmu_signature (rich text)
+      field_3743: responses.confirm_read, // mmu_confirm_read (YES/NO boolean)
+      field_3744: responses.time_to_consider, // mmu_time_to_consider (YES/NO boolean)
+      field_3745: responses.free_to_withdraw, // mmu_free_to_withdraw (YES/NO boolean)
+      field_3746: responses.agree_participate, // mmu_agree_participate (YES/NO boolean)
+      field_3747: responses.permission_research, // mmu_permission_research (YES/NO boolean)
+      field_3748: signatureHTML // mmu_signature (rich text with all details)
     };
     
     // Step 4: Update student record
