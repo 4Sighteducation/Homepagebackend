@@ -114,16 +114,13 @@ module.exports = async (req, res) => {
     await updateStudentConsent(studentRecord.id, consentData, appId, apiKey);
     console.log('[MMU Consent] Student record updated successfully');
     
-    // Step 5: Login to Knack
-    console.log('[MMU Consent] Logging in student...');
-    const sessionData = await loginToKnack(email, MMU_PASSWORD, appId);
-    console.log('[MMU Consent] Login successful');
+    // Step 5: Return success immediately (skip login for speed)
+    console.log('[MMU Consent] Consent saved, skipping auto-login for performance');
     
-    // Step 6: Return success with session token
     return res.status(200).json({
       success: true,
       message: 'Consent form submitted successfully',
-      session: sessionData.session,
+      email: email,
       redirectUrl: REDIRECT_URL
     });
     
