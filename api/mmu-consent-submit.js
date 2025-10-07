@@ -140,11 +140,11 @@ module.exports = async (req, res) => {
  * Find student record by email in object_10
  */
 async function findStudentByEmail(email, appId, apiKey) {
-  // Note: field_84 is the email field in object_10
+  // Note: field_197 is the email field in object_10
   const filters = {
     match: 'and',
     rules: [
-      { field: 'field_84', operator: 'is', value: email }
+      { field: 'field_197', operator: 'is', value: email }
     ]
   };
   
